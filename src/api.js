@@ -1,7 +1,7 @@
 export async function apiPostNoticeWrite(formData) {
     try{
         // console.log("API", formData);
-        return await fetch("https://server-koinonia.koyeb.app/notice/write", {
+        return await fetch("https://port-0-yj-express-server-17xco2nlsjopaja.sel5.cloudtype.app/notice/write", {
             // 로컬서버접속-http://localhost:4000
             method: "POST",
             headers: {

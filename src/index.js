@@ -2,15 +2,23 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import App from "./App";
 import { QueryClient, QueryClientProvider } from "react-query";
+import List from "./List";
+import Write from "./Write";
+import Detail from "./Detail";
 
 // 라우터
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
-  },
+    element: <List />,
+  },{
+    path: "write",
+    element: <Write />
+  },{
+    path: "/:id",
+    element: <Detail />
+  }
 ]);
 
 const queryClient = new QueryClient(); //리액트 쿼리

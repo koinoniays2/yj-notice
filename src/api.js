@@ -37,3 +37,20 @@ export async function apiPostNoticeWrite(formData) {
         console.log(error);
     }
 }
+
+// 업데이트
+export async function apiPostNoticeUpdate(props) {
+    const { formData, id } = props;
+    console.log("api", formData, id);
+    try {
+      return await fetch(`${BASE_URL}/notice/${id}/update`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      }).then((res) => res.json());
+    } catch (error) {
+      console.log(error);
+    }
+  }

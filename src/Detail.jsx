@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import { apiGetNoticeDetail } from "./api";
 
 export default function Detail() {
@@ -16,8 +16,13 @@ export default function Detail() {
             <div>{data?.data?.writer}</div>
             <div>{data?.data?.createdAt}</div>
             <div>{data?.data?.description}</div>
-            <button>수정</button>
-            <button>삭제</button>
+            <div className="flex gap-4 text-white">
+              {/* data를 state값으로 update page에 넘기기 */}
+              <Link to={`/${id}/update`} state={data?.data}>
+                <button className="bg-green-500 px-4 py-2">수정</button>
+              </Link>
+              <button className="bg-red-500 px-4 py-2">삭제</button>
+            </div>
         </div>
     </div>
   )

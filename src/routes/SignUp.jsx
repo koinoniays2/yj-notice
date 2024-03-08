@@ -3,6 +3,8 @@ import Button from "../components/Button";
 import InputBox from "../components/InputBox";
 import Socials from "../components/Socials";
 import { useForm } from "react-hook-form";
+import { useMutation } from "react-query";
+import { apiPostRegister } from "../api";
 
 export default function SignUp() {
   const {
@@ -10,11 +12,13 @@ export default function SignUp() {
     handleSubmit,
     formState: { errors }, // formState : 에러가 났을때 저장되는 공간느낌
   } = useForm();
+  const { mutate } = useMutation(apiPostRegister);
   const onValid = (formData) => {
-    console.log(formData);
+    // console.log(formData);
+    mutate(formData);
   };
 
-  console.log(errors);
+  // console.log(errors);
   return (
     <div className="w-full flex justify-center py-16">
       <div className="max-w-screen-sm w-full flex flex-col gap-8 px-4">
@@ -35,7 +39,7 @@ export default function SignUp() {
             type="text"
             placeholder="아이디"
             errorOption={{
-              required: "아이디는 필수 입력사항입니다",
+              required: "아이디는 필수 입력사항입니다.",
               minLength: {
                 value: 2,
                 message: "아이디는 최소 2글자 이상이어야 합니다.",
@@ -49,6 +53,14 @@ export default function SignUp() {
             name="email"
             type="email"
             placeholder="이메일"
+            errorOption={{
+              required: "이메일은 필수 입력사항입니다.",
+              pattern: {
+                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                message: "이메일 형식을 지켜주세요."
+              }
+            }}
+            errors={errors?.email?.message}
           />
           {/* 비밀번호 */}
           <InputBox
@@ -56,6 +68,14 @@ export default function SignUp() {
             name="password"
             type="password"
             placeholder="패스워드"
+            errorOption={{
+              required: "패스워드는 필수 입력사항입니다.",
+              minLength: {
+                value: 4,
+                message: "아이디는 최소 4글자 이상이어야 합니다."
+              }
+            }}
+            errors={errors?.password?.message}
           />
           {/* 비밀번호 확인 */}
           <InputBox
@@ -63,8 +83,16 @@ export default function SignUp() {
             name="password2"
             type="password"
             placeholder="패스워드 확인"
+            errorOption={{
+              required: "패스워드 확인은 필수 입력사항입니다.",
+              validate: (value, form) => {
+                return (
+                  value === form.password || "패스워드 확인은 패스워드와 같아야 합니다."
+                );
+              }
+            }}
+            errors={errors?.password2?.message}
           />
-          {/* 콤보박스 취미 */}
           <Button type="submit" text="회원가입" />
         </form>
         {/* 소셜 로그인 */}

@@ -54,7 +54,7 @@ export async function apiPostNoticeUpdate(props) {
       console.log(error);
     }
   }
-
+  // 삭제
   export async function apiPostNoticeDelete(id) {
     console.log("id : ", id);
     try {
@@ -65,6 +65,21 @@ export async function apiPostNoticeUpdate(props) {
             },
         }).then((res) => res.json());
     } catch(error) {
+        console.log(error);
+    }
+  }
+  // 회원가입 하기
+  export async function apiPostRegister(formData) {
+    console.log(formData);
+    try{
+        return await fetch(`${BASE_URL}/users/register`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json", 
+            },
+            body: JSON.stringify(formData)
+        }).then((res) => res.json()); // 값을 받아오면 json형식으로
+    }catch(error) {
         console.log(error);
     }
   }

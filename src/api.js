@@ -83,3 +83,19 @@ export async function apiPostNoticeUpdate(props) {
         console.log(error);
     }
   }
+
+  // 로그인
+  export async function apiPostLogin(data) {
+    console.log(data);
+    try{
+        return await fetch(`${BASE_URL}/users/login`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data)
+        }).then(res => res.json());
+    }catch(error){
+        console.log(error);
+    }
+  }

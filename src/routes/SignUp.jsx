@@ -11,16 +11,29 @@ export default function SignUp() {
     register,
     handleSubmit,
     formState: { errors }, // formState : 에러가 났을때 저장되는 공간느낌
+    setError, // 에러메세지 출력
   } = useForm();
   const navigate = useNavigate();
-  const { mutate } = useMutation(apiPostRegister, {
+  // data = 서버에서 res.send()한 부분을 받음(에러메세지 출력할 때 첫번째 방법)
+  const { mutate/*,data*/ } = useMutation(apiPostRegister, {
     onSuccess: (data) => {
       if(data.result === true) {
         // 로그인페이지로 이동
         navigate("/users/login");
       }
+    },
+    // 성공, 실패 상관없이 무조건 출력(에러메세지 출력할 때 두번째 방법)
+    onSettled: (data) => {
+      console.log(data); // res.send()를 받아옴
+      if(data?.result === false) { // false인경우 원하는 위치(input name)에 에러 셋팅
+        setError("username", { 
+          message: data.message
+        });
+      }
     }
   });
+  // console.log(data);
+  
   const onValid = (formData) => {
     // console.log(formData);
     mutate(formData);
@@ -101,6 +114,11 @@ export default function SignUp() {
             }}
             errors={errors?.password2?.message}
           />
+          {/* 에러메세지 출력 첫번째방법 */}
+          {/* {
+            data?.result === false && (
+            <span className="text-red-500 text-sm">{data?.message}</span>)
+          } */}
           <Button type="submit" text="회원가입" />
         </form>
         {/* 소셜 로그인 */}

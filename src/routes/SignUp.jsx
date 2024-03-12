@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import InputBox from "../components/InputBox";
 import Socials from "../components/Socials";
@@ -12,7 +12,15 @@ export default function SignUp() {
     handleSubmit,
     formState: { errors }, // formState : 에러가 났을때 저장되는 공간느낌
   } = useForm();
-  const { mutate } = useMutation(apiPostRegister);
+  const navigate = useNavigate();
+  const { mutate } = useMutation(apiPostRegister, {
+    onSuccess: (data) => {
+      if(data.result === true) {
+        // 로그인페이지로 이동
+        navigate("/users/login");
+      }
+    }
+  });
   const onValid = (formData) => {
     // console.log(formData);
     mutate(formData);

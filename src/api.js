@@ -93,8 +93,33 @@ export async function apiPostNoticeUpdate(props) {
             headers: {
                 "Content-Type": "application/json",
             },
+            credentials: "include", // 세션을 쿠키에 저장하기위해
             body: JSON.stringify(data)
         }).then(res => res.json());
+    }catch(error){
+        console.log(error);
+    }
+  }
+
+  // 로그인 후 userData 요청(쿠키에 저장된 세션을 가지고 요청)
+  export async function apiGetUser() {
+    try{
+        return await fetch(`${BASE_URL}/users/login-success`, {
+            method: "GET",
+            credentials: "include"
+        }).then((res) => res.json());
+    }catch(error){
+        console.log(error);
+    }
+  }
+
+  // 로그아웃
+  export async function apiPostLogout() {
+    try{
+        return await fetch(`${BASE_URL}/users/logout`, {
+            method: "POST",
+            credentials: "include"
+        }).then((res) => res.json());
     }catch(error){
         console.log(error);
     }

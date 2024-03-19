@@ -9,6 +9,8 @@ import Detail from "./Detail";
 import Update from "./Update";
 import SignUp from "./routes/SignUp";
 import Login from "./routes/Login";
+import Kakao from "./routes/Kakao";
+import Profile from "./routes/Profile";
 
 // 라우터
 const router = createBrowserRouter([
@@ -26,7 +28,15 @@ const router = createBrowserRouter([
       {
         path: "login",
         element: <Login />
-      }
+      },
+      {
+        path: "profile",
+        element: <Profile />
+      },
+      {
+        path: "socials/kakao",
+        element: <Kakao />,
+      },
     ]
   },{
     path: "write",
